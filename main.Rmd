@@ -1,19 +1,70 @@
 ---
 title: "Gráficos de Situaciones Especiales"
-output: html_notebook
+output:
+  word_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+  html_notebook:
+    toc: yes
 ---
-
-Argentina 2001
-
-```{r}
-x <- list()
-x$x <- 1:3
-with(x,{
-  x*10
-})
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+```{r General Settings }
+images <- '/Users/andresp/Desktop/'
+```
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
+
+Argentina 2001
+---------------
+
+## Por qué es un activo estratégico
+
+Argentina es un mercado grande con alto crecimiento demográfico y es  un importante  proveedor de commodities. Su PBI está por encima del PBI promedio del mundo (es el tercero de Latinoamérica). Además es el país #8 en superficie  y el #32 en cantidad de habitantes del mundo. Su inestabilidad amenaza al sistema económico latinoamericano y por lo tanto a los mercados emergentes.
+
+## Por qué es un activo inestable
+
+Las instituciones argentinas son extractivas. La libertad económica es muy baja y la concentración de riesgo es muy alta. Tiene un track record de no respetar contratos.
+
+### Complejidad económica
+
+
+  ![Indice de complejidad económica](argie_eco_complexity.png)
+  
+Más del 50% de las exportaciones son de productos minerales o animales con poco valor agregado. 60% de lo que exporta va a países emergentes, con concentración en Brasil y China.
+
+  ![Exportaciones](argie_exports.png)
+
+  ![Socios comerciales](argie_partners.png)
+
+
+### Libertad económica
+
+  ![Indice de Libertad económica](argie_eco_freedom.png)
+
+### Monitoreo de indicadores
+
+##### Excange rate: 
+El tipo de cambio fijo se rompe, produciendo una devaluación.
+
+
+![Tipo de cambio rea, cambio mensual](argie_reer.png)
+
+##### CDS: 
+El seguro de default de Argentina es bajo al igual que todos los de la región. Esto producto de las acciones anticíclicas de los mercados desarrollados para evitar un contagio de la crisis asiática y la crisis de las 'dot-com'.
+
+![Credit default swap 2001](argie_cds.png)
+
+##### Endeudamiento: 
+Antes de la crisis el endeudamiento sube a fines de la década del 90. La deuda se dispara por el cambio en el tipo de cambio real.
+
+![Endeudamiento](argie_endeudamiento.png)
+
+### Valor duro de los activos
+
+
+##### Valor libros: 
+El tipo de cambio fijo se rompe, produciendo una devaluación.
+
