@@ -1,21 +1,33 @@
 ---
 title: "Gráficos de Situaciones Especiales"
 output:
-  word_document:
+  html_document:
+    toc: yes
+  html_notebook:
     toc: yes
   pdf_document:
     toc: yes
-  html_notebook:
+  word_document:
     toc: yes
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(dplyr)
+library(ggplot2)
+library(ggthemes)
 ```
 
 ```{r General Settings }
 images <- '/Users/andresp/Desktop/'
+
+data <- read.csv('data.csv') %>% tbl_df() %>%
+  mutate(date = as.Date(date))
 ```
 
+```{r case Argentina}
+case_data <- data %>% filter(name == 'Argentina')
+
+```
 
 Argentina 2001
 ---------------
@@ -33,6 +45,7 @@ Las instituciones argentinas son extractivas. La libertad económica es muy baja
 
   ![Indice de complejidad económica](argie_eco_complexity.png)
   
+
 Más del 50% de las exportaciones son de productos minerales o animales con poco valor agregado. 60% de lo que exporta va a países emergentes, con concentración en Brasil y China.
 
   ![Exportaciones](argie_exports.png)
@@ -44,13 +57,17 @@ Más del 50% de las exportaciones son de productos minerales o animales con poco
 
   ![Indice de Libertad económica](argie_eco_freedom.png)
 
+
+
+  ![Comparación de Libertad económica](argie_ile_comparado.png)
+
 ### Monitoreo de indicadores
 
 ##### Excange rate: 
 El tipo de cambio fijo se rompe, produciendo una devaluación.
 
 
-![Tipo de cambio rea, cambio mensual](argie_reer.png)
+![Tipo de cambio real, cambio mensual](argie_reer.png)
 
 ##### CDS: 
 El seguro de default de Argentina es bajo al igual que todos los de la región. Esto producto de las acciones anticíclicas de los mercados desarrollados para evitar un contagio de la crisis asiática y la crisis de las 'dot-com'.
@@ -60,11 +77,56 @@ El seguro de default de Argentina es bajo al igual que todos los de la región. 
 ##### Endeudamiento: 
 Antes de la crisis el endeudamiento sube a fines de la década del 90. La deuda se dispara por el cambio en el tipo de cambio real.
 
+
 ![Endeudamiento](argie_endeudamiento.png)
 
 ### Valor duro de los activos
 
+El price to book de las acciones argentinas es en general 1.5x
 
-##### Valor libros: 
-El tipo de cambio fijo se rompe, produciendo una devaluación.
+```{r argie pb}
+ggplot(case_data %>% filter(unique_variable == 'Argentina PB'),
+       aes(date,value)) + geom_line() + theme_wsj(color = 'white') +
+  theme(plot.title = element_text(size = 14)) +
+  ggtitle('Price to book Argentina')
+```
+
+
+
+Durante la crisis el  price to book está por debajo de 1x
+
+```{r argie pb en crisis}
+ggplot(case_data %>% filter(unique_variable == 'Argentina PB',
+                            date > "2000-09-04" & date <"2004-09-18"),
+       aes(date,value)) + geom_line() + theme_wsj(color = 'white') +
+  theme(plot.title = element_text(size = 14)) +
+  ggtitle('Price to book Argentina')
+
+``` 
+
+
+### Retorno de la inversión
+
+Como el punto de entrada no es preciso, calculamos distintos retorno para diferentes puntos de entrada y puntos de salida.
+
+```{r argie returns}
+case_return_vars <- c('TR_1y', 'TR_3y','TR_5y')
+ggplot(case_data %>% filter(variable %in% case_return_vars,
+                            date > "2000-09-04" & date <"2004-09-18"),
+       aes(date,value, color = variable)) + 
+  geom_line() + theme_wsj(color = 'white') +
+  theme(plot.title = element_text(size = 14), legend.title = element_blank()) +
+  ggtitle('Retorno de la situación especial Argentina 2001')
+```
+
+En este gráfico se ve el retorno de la inversión a 1, 3 y 5 años. Este gráfico se lee así: 'si entré en el 2002, un año después estoy perdiendo plata (la línea roja está debajo de cero). Tres años después (línea verde) estoy arriba (1x). Cinco años después (línea azul ) el trade multiplicó por 2.5x'.
+
+Esperando a que el price to book esté debajo de 1x - y un poco más el retorno es bastante bueno porque la opcionalidad tuvo un precio bajo.el mínimo de price to book fue menor a 0.5x y la re-estructuración de deuda fue el salvataje del sistema financiero. En el medio, el paradigma de Argentina como pais viable sufrió grandes dudas y la certeza de que desapareciera su valor fue muy alta.
+
+
+
+
+
+
+
 
