@@ -1,15 +1,4 @@
----
-title: "Gráficos de Situaciones Especiales"
-output:
-  pdf_document:
-    toc: yes
-  html_notebook:
-    toc: yes
-  html_document:
-    toc: yes
-  word_document:
-    toc: yes
----
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(dplyr)
@@ -59,16 +48,10 @@ Más del 50% de las exportaciones son de productos minerales o animales con poco
 ### Libertad económica
 
   ![Indice de Libertad económica](images/argie_eco_freedom.png)
-  
-```{r Economic freedom compared}
-eco_freedom_compared <- data.frame(Valor = c(44,60,60,84))
-row.names(eco_freedom_compared) <- c('Argentina','Región','Mundo','Desarrollados')
-knitr::kable(
-  eco_freedom_compared, caption = 'Puntaje comparado de libertad económica 2015.'
-)
 
-```
-  
+
+
+  ![Comparación de Libertad económica](images/argie_ile_comparado.png)
 
 ### Monitoreo de indicadores
 
@@ -189,7 +172,6 @@ Opción C
 Argentina no es viable como país. El riesgo de quiebra o confiscación se hace realiad, y los únicos de activos son fondos de deep-distress que tienen la capacidad de litigar o asociarse con el gobierno.
 
 Banco Francés pierde más del 90% de su valor
-
 ![Banco Francés pierde el 90% de su valor](images/argie_bfr_casi_quiebra.png)
 
 
@@ -226,11 +208,6 @@ ggplot(case_data %>% filter(unique_variable == 'Argentina Price | DrawDown',
 
 
 ```
-
-
-
-
-
 
 
 

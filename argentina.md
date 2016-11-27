@@ -1,36 +1,9 @@
----
-title: "Gráficos de Situaciones Especiales"
-output:
-  pdf_document:
-    toc: yes
-  html_notebook:
-    toc: yes
-  html_document:
-    toc: yes
-  word_document:
-    toc: yes
----
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-library(dplyr)
-library(ggplot2)
-library(ggthemes)
-```
 
-```{r General Settings }
-images <- '/Users/andresp/Desktop/'
 
-data <- readRDS('output.rds') %>% tbl_df() %>%
-  mutate(date = as.Date(date))
-```
 
-```{r case Argentina}
-case_data <- data %>% filter(name == 'Argentina')
-case_date <- list()
-case_date$start <- '1995-01-01'
-case_date$end <- '2005-01-01'
 
-```
+
+
 
 Argentina 2001
 ---------------
@@ -59,16 +32,10 @@ Más del 50% de las exportaciones son de productos minerales o animales con poco
 ### Libertad económica
 
   ![Indice de Libertad económica](images/argie_eco_freedom.png)
-  
-```{r Economic freedom compared}
-eco_freedom_compared <- data.frame(Valor = c(44,60,60,84))
-row.names(eco_freedom_compared) <- c('Argentina','Región','Mundo','Desarrollados')
-knitr::kable(
-  eco_freedom_compared, caption = 'Puntaje comparado de libertad económica 2015.'
-)
 
-```
-  
+
+
+  ![Comparación de Libertad económica](images/argie_ile_comparado.png)
 
 ### Monitoreo de indicadores
 
@@ -77,17 +44,7 @@ knitr::kable(
 
 Argentina acumula reservas y sostiene su régimen cambiario de convertibilidad. Tiene un déficit de cuenta corriente bastante más alto que el promedio del mundo, y hay una tendencia bajista en la riquieza por habitante.
 
-```{r balance macro}
-macro_vars <- c("Argentina Current account balance (% of GDP)" ,
-                "Argentina Total reserves (includes gold, current US$)" ,
-                "Argentina GDP per capita (current US$)")
-ggplot(case_data %>% filter(unique_variable %in% macro_vars,
-                            date > case_date$start & date <case_date$end),
-       aes(date,value)) + geom_line() + theme_wsj(color = 'white') +
-  facet_wrap(~unique_variable, scales = 'free_y', ncol = 2) +
-  theme(plot.title = element_text(size = 14)) +
-  ggtitle('Variables de monitoreo macro')
-```
+![plot of chunk balance macro](argentina-figure/balance macro-1.png)
 
 El deficit fisco congénito se logra controlar en el principo de la década del 90. Pero al acercarse al período eleccionario, comienza a subir hasta llegar al 6%, en un contexto de flexibilidad monetaria muy baja.
 
@@ -95,27 +52,13 @@ El deficit fisco congénito se logra controlar en el principo de la década del 
 ##### Excange rate: 
 El tipo de cambio fijo se rompe, produciendo una devaluación.Anteriormente, oscilaba en 250 (momento de la convertibilidad), hasta que baja a 100 y de ahí se deprecia.
 
-```{r reerplot}
-ggplot(case_data %>% filter(unique_variable == 'Argentina Real Eff. Exchange Rate',
-                            date > case_date$start & date <case_date$end),
-       aes(date,value)) + geom_line() + theme_wsj(color = 'white') +
-  theme(plot.title = element_text(size = 14)) +
-  ggtitle('Tipo de cambio real multilateral')
-
-```
+![plot of chunk reerplot](argentina-figure/reerplot-1.png)
 
 
 ##### Carry: 
 El tipo de cambio fijo se rompe, produciendo una devaluación.Anteriormente, oscilaba en 250 (momento de la convertibilidad), hasta que baja a 100 y de ahí se deprecia.
 
-```{r carry}
-ggplot(case_data %>% filter(unique_variable == 'Argentina BADLAR',
-                            date > case_date$start & date <case_date$end),
-       aes(date,value)) + geom_line() + theme_wsj(color = 'white') +
-  theme(plot.title = element_text(size = 14)) +
-  ggtitle('Argentina Carry (Tasa Badlar)')
-
-```
+![plot of chunk carry](argentina-figure/carry-1.png)
 
 
 ##### CDS: 
@@ -133,26 +76,12 @@ Antes de la crisis el endeudamiento sube a fines de la década del 90. La deuda 
 
 El price to book de las acciones argentinas es en general 1.5x
 
-```{r}
-ggplot(case_data %>% filter(unique_variable == 'Argentina PB',
-                            date > case_date$start & date <case_date$end),
-       aes(date,value)) + geom_line() + theme_wsj(color = 'white') +
-  theme(plot.title = element_text(size = 14)) +
-  ggtitle('Price to book Argentina')
-
-```
+![plot of chunk unnamed-chunk-1](argentina-figure/unnamed-chunk-1-1.png)
 
 
 Durante la crisis el  price to book está por debajo de 1x. (La primer parte del PB es probablemente un error de data, pero el valor de equilibrio de todas maneras era al menos 1x).
 
-```{r argie_ pb en crisis_pb}
-ggplot(case_data %>% filter(unique_variable == 'Argentina PB',
-                            date > case_date$start & date <case_date$end),
-       aes(date,value)) + geom_line() + theme_wsj(color = 'white') +
-  theme(plot.title = element_text(size = 14)) +
-  ggtitle('Price to book Argentina')
-
-``` 
+![plot of chunk argie_ pb en crisis_pb](argentina-figure/argie_ pb en crisis_pb-1.png)
 
 ## Análisis de opcionalidad
 
@@ -169,15 +98,7 @@ Si el trade se hace a un Earnings Yield de 20% o más hay un devengamiento impor
 Véase el el período en el que el EY es cero; en este momento hay grandes posibilidades de un cambio de paradigma.
 
 
-```{r Vuelta a la normalidad}
-ggplot(case_data %>% filter(unique_variable == 'Argentina PE',
-                            date > case_date$start & date <case_date$end),
-       aes(date,1 / value)) + geom_line() + theme_wsj(color = 'white') +
-  theme(plot.title = element_text(size = 14)) +
-  ggtitle('Earnings Yield Argentina')
-
-
-```
+![plot of chunk Vuelta a la normalidad](argentina-figure/Vuelta a la normalidad-1.png)
 
 Opción B
 
@@ -189,7 +110,6 @@ Opción C
 Argentina no es viable como país. El riesgo de quiebra o confiscación se hace realiad, y los únicos de activos son fondos de deep-distress que tienen la capacidad de litigar o asociarse con el gobierno.
 
 Banco Francés pierde más del 90% de su valor
-
 ![Banco Francés pierde el 90% de su valor](images/argie_bfr_casi_quiebra.png)
 
 
@@ -202,35 +122,13 @@ Telecom casi llega a un precio de cero
 
 Como el punto de entrada no es preciso, calculamos distintos retorno para diferentes puntos de entrada y puntos de salida.
 
-```{r argie returns}
-case_return_vars <- c('TR_1y', 'TR_3y','TR_5y')
-ggplot(case_data %>% filter(variable %in% case_return_vars,
-                            date > case_date$start & date <case_date$end),
-       aes(date,value, color = variable)) + 
-  geom_line() + theme_wsj(color = 'white') +
-  theme(plot.title = element_text(size = 14), legend.title = element_blank()) +
-  ggtitle('Retorno de la situación especial Argentina 2001')
-```
+![plot of chunk argie returns](argentina-figure/argie returns-1.png)
 
 En este gráfico se ve el retorno de la inversión a 1, 3 y 5 años. Este gráfico se lee así: 'si entré en el 2002, un año después estoy perdiendo plata (la línea roja está debajo de cero). Tres años después (línea verde) estoy arriba (1x). Cinco años después (línea azul ) el trade multiplicó por 2.5x'.
 
 Esperando a que el price to book esté debajo de 1x - y un poco más el retorno es bastante bueno porque la opcionalidad tuvo un precio bajo.el mínimo de price to book fue menor a 0.5x y la re-estructuración de deuda fue el salvataje del sistema financiero. En el medio, el paradigma de Argentina como pais viable sufrió grandes dudas y la certeza de que desapareciera su valor fue muy alta. Esto está reflejado por el drawdown, que inclusive haciendo una multiplpicación de 10x es cercano al 50%.
 
-```{r argie drawdowns}
-ggplot(case_data %>% filter(unique_variable == 'Argentina Price | DrawDown',
-                            date > "2000-09-04" & date <"2004-09-18"),
-       aes(date,value, color = variable)) + 
-  geom_line() + theme_wsj(color = 'white') +
-  theme(plot.title = element_text(size = 14), legend.title = element_blank()) +
-  ggtitle('drawdowns situación especial Argentina 2001')
-
-
-```
-
-
-
-
-
+![plot of chunk argie drawdowns](argentina-figure/argie drawdowns-1.png)
 
 
 
