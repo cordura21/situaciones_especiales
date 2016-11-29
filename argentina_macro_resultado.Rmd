@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
 ```
-# Análisis de opcionalidad
+# ANALISIS DE OPCIONALIDAD
 
 ![Una vez desatada la crisis, las opciones son: A) El valor intrínseco vuelve al nivel anterior. Esto produce una aceleración del retorno y posterior devengamiento de las primas de reisgo anteriores. B) Value trap:el trade no funciona y devenga una tasa mucho menor que la anterior y hasta negativa. C) El activo o el inversor quiebran. ](images/opcionalidad.png)
 
@@ -49,9 +49,7 @@ ggplot(case %>% filter(unique_variable == 'Argentina Price | DrawDown'), aes(dat
   theme(legend.position = 'bottom') + theme_wsj(color = 'white')
 ```
 
-# Resultados posibles
-
-
+# RESULTADOS POSIBLES
 
 
 ```{r resultados_posibles, fig.margin = FALSE, fig.cap = "En este gráfico se ve el retorno de la inversión a 1, 3 y 5 años. Este gráfico se lee así: si entré en el 2002, un año después estoy perdiendo plata (la línea roja está debajo de cero). Tres años después (línea verde) estoy arriba (1x). Cinco años después (línea azul ) el trade multiplicó por 2.5x.", cache=TRUE, fig.width=4, fig.height=8}
