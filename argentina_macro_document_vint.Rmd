@@ -1,0 +1,56 @@
+---
+title: "Crisis Argentina 2001"
+subtitle: "Análisis del valor intrínseco"
+author: "JJ Allaire, Yihui Xie, Dirk Eddelbuettel"
+date: "`r Sys.Date()`"
+output:
+  tint::tintPdf: 
+    citation_package: natbib
+    latex_engine: pdflatex
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup2, include=FALSE}
+library(tint)
+library(dplyr)
+library(ggplot2)
+library(ggthemes)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tint'))
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+
+```
+# Valor intrínseco
+
+```{r fig-val-pb, fig.margin = FALSE, fig.cap = "Valor libros de la bolsa (error estadístico hasta el 2002).", cache=FALSE}
+library(ggthemes)
+ case <- readRDS('output.RDS') %>% tbl_df() %>% filter(name == 'Argentina')
+
+ggplot(case %>% filter(unique_variable == 'Argentina PB'), aes(date, value)) +
+  geom_line(stat = 'identity') +
+  theme(legend.position = 'bottom') + theme_wsj(color = 'white')
+```
+
+```{r fig-val-pe, fig.margin = FALSE, fig.cap = "Price Earnings de la bolsa.", cache=FALSE}
+
+ggplot(case %>% filter(unique_variable == 'Argentina PE'), aes(date, value)) +
+  geom_line(stat = 'identity') +
+  theme(legend.position = 'bottom') + theme_wsj(color = 'white')
+```
+
+```{r fig-val-ep, fig.margin = FALSE, fig.cap = "Earnings Yield de la bolsa.", cache=FALSE}
+
+ggplot(case %>% filter(unique_variable == 'Argentina PE'), aes(date, value)) +
+  geom_line(stat = 'identity') +
+  theme(legend.position = 'bottom') + theme_wsj(color = 'white')
+```
+
+```{r fig-val-carry, fig.margin = FALSE, fig.cap = "Carry bancario en moneda local (Badlar).", cache=FALSE}
+
+ggplot(case %>% filter(unique_variable == 'Argentina BADLAR'), aes(date, value)) +
+  geom_line(stat = 'identity') +
+  theme(legend.position = 'bottom') + theme_wsj(color = 'white')
+```

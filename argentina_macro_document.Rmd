@@ -1,6 +1,6 @@
 ---
-title: "Tint Is Not Tufte"
-subtitle: "An implementation in R Markdown"
+title: "Crisis Argentina 2001"
+subtitle: "Análisis del activo"
 author: "JJ Allaire, Yihui Xie, Dirk Eddelbuettel"
 date: "`r Sys.Date()`"
 output:
@@ -11,7 +11,7 @@ bibliography: skeleton.bib
 link-citations: yes
 ---
 
-```{r setup, include=FALSE}
+```{r setup0, include=FALSE}
 library(tint)
 # invalidate cache when the package version changes
 knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tint'))
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(message = FALSE)
 # Antes de empezar...
 Este análisis fue hecho 15 años después del evento. Por lo tanto, tiene 'look-ahead' bias. Tiene como fin mostrar un procedimiento de análisis.
 
-```{r fig-nocap-margin-first, fig.margin=TRUE, fig.width=4, fig.height=4, cache=TRUE, echo=FALSE}
+```{r fig-nocap-margin-first, fig.margin=TRUE, fig.width=4, fig.height=4, cache=FALSE, echo=FALSE}
 library(ggplot2)
 # ggplot(mtcars, aes(wt, mpg)) + geom_point(size=3, aes(colour=factor(cyl))) + theme(legend.position="none")
 
@@ -95,14 +95,3 @@ El factor externo, la falta de flexibilidad cambiaria y el gasto político contr
 El crecimiento del PBI se detiene,reduciendo la capacidad recaudatoria y, sumado al tipo de cambio alto, hacen que el país esté al borde de la insolvencia.
 
 ![PBI real, valores trimestrales. ](images/argie_macro/real gdp evolution.png)
-
-# Valor intrínseco
-
-```{r fig-val-int, fig.margin = FALSE, fig.cap = "Valor libros de la bolsa (error estadístico hasta el 2002).", cache=TRUE}
- case <- readRDS('output.RDS') %>% tbl_df() %>% filter(name == 'Argentina')
-
-ggplot(case %>% filter(unique_variable == 'Argentina PB'), aes(date, value)) +
-  geom_line(stat = 'identity') +
-  theme(legend.position = 'bottom') + theme_wsj(color = 'white')
-```
-
