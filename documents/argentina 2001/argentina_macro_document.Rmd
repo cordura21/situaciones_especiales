@@ -179,3 +179,10 @@ En los siguientes gráficos se ve el caso aplicado a Banco Francés y Telecom. M
 
 ![Precio acción de Telecom Argentina](images/argie_teco_casi_cero.png)
 
+Además hubieron otras alternativas de explotar la situación especial:
+![Carry Argentina 2001](carry_alts.png)
+
+
+
+
+

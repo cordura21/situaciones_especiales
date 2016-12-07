@@ -1,0 +1,71 @@
+---
+title: "Tint Is Not Tufte"
+subtitle: "An implementation in R Markdown"
+author: "JJ Allaire, Yihui Xie, Dirk Eddelbuettel"
+date: "`r Sys.Date()`"
+output:
+  tint::tintPdf: 
+    citation_package: natbib
+    latex_engine: pdflatex
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tint)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tint'))
+options(htmltools.dir.version = FALSE)
+```
+# La matemática del convergente: la virtud de la paciencia  
+  
+```{marginfigure }
+Supongamos un activo cuyo valor intrínseco es $100, que es también su precio de mercado.
+
+Hacemos una matriz de gráficos de 5x2 (ver la siguiente página).En cada uno de esos gráficos  analizamos qué pasa si compramos el activo de valor $100 a distintos precios:  $10, $20, $30, … hasta $100.
+  
+Cada gráfico corresponde a un precio de entrada.
+
+En el eje  X vemos cuántas veces multiplicamos el capital. Un ratio de cero dice que perdí todo. Un ratio de 1 dice que no tuve resultado. Un ratio de 10 dice que gané 9 por cada 1 que puse.
+  
+El eje Y vemos la probabilidad de multiplicar el patrimonio por esos ratios. Uno quiere decir que la probabilidad es 100%.
+  
+En primer gráfico vemos qué pasa si esperamos a que el precio baje de $100 a $10. La distribución de resultados tiene forma aleatoria. Es casi la misma la probabilidad de no ganar que de multiplicar por 10.
+
+En el gráfico de $50 la distribución de probabilidades es normal. Hay una gran probabilidad de salir en cero, y menos probabilidad de ganar o perder mucho.
+  
+En $ 90, la probabilidad es mucho más acotada y es negativa. Por qué? Porque estamos asumiendo que el activo  vuelve a su valor intrínseco inicial. Es decir que las chances de que después de una crisis vaya a un valor aún mejor que el anterior son cero (para explotar esa situación es mejor hacerlo con seguimiento de tendencias)
+```
+
+
+  
+```{r, echo = FALSE,message=FALSE, warning=FALSE, fig.width= 5 ,fig.height= 7}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(directlabels)
+cont_math <- data.frame(entrada = rep(c(10,20,30,40,50,60,70,80,90,100),10))
+cont_math_out <- cont_math %>% tbl_df() %>% arrange(entrada)
+cont_math <- cbind(cont_math, cont_math_out)
+names(cont_math) <- c('Entrada','Salida')
+cont_math <- cont_math %>%
+  mutate(Retorno = (Salida / Entrada), Entrada = as.factor(Entrada),
+         breaks = cut(as.numeric(Entrada),breaks = 5))
+
+library(scales)
+convergente_plot <- ggplot(cont_math, aes(Retorno-1,
+                      fill = Entrada, colour = Entrada)) +
+  geom_density(alpha = 0.20) +
+  scale_y_continuous(labels = scales::percent) +
+  geom_vline(aes(xintercept=0), color = 'black', alpha = .25) +
+  facet_wrap(~ breaks, ncol = 2) + 
+  theme_minimal(base_size = 10) +
+  theme(strip.background = element_blank(), strip.text = element_blank()) + 
+  ylab('Probabilidad del resultado (%)') + 
+  xlab('Retorno (x veces capital)') + 
+  ggtitle('Resultado según el precio de entrada.')
+
+direct.label(convergente_plot)
+
+
+```
